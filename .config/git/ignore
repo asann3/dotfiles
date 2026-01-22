@@ -1,2 +1,5 @@
 .DS_Store
 .asann3/
+.serena/
+
+**/.claude/settings.local.json
