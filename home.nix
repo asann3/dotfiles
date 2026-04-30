@@ -67,6 +67,7 @@
 
     # media
     yt-dlp
+    ffmpeg
 
     # container
     colima
