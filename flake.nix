@@ -16,7 +16,7 @@
       # List packages installed in system profile. To search by name, run:
       # $ nix-env -qaP | grep wget
       environment.systemPackages =
-        [ pkgs.vim
+        [
         ];
 
       # Necessary for using flakes on this system.
@@ -46,7 +46,7 @@
     # $ darwin-rebuild build --flake .#${userConfig.host}
     darwinConfigurations."${userConfig.host}" = nix-darwin.lib.darwinSystem {
       specialArgs = { inherit userConfig; };
-      modules = [ 
+      modules = [
         configuration
         home-manager.darwinModules.home-manager {
           home-manager.useGlobalPkgs = true;
