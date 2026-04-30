@@ -48,6 +48,7 @@
     swig
     llvmPackages.lld
     nixfmt
+    nil
 
     # security / reversing
     binwalk
