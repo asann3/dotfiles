@@ -91,6 +91,9 @@
       init.defaultBranch = "main";
       pull.rebase = true;
     };
+    settings = {
+      credential.helper = "osxkeychain";
+    };
   };
 
   programs.home-manager.enable = true;
