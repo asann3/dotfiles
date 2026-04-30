@@ -1,4 +1,9 @@
-{ config, pkgs, userConfig, ... }:
+{
+  config,
+  pkgs,
+  userConfig,
+  ...
+}:
 
 {
   home.username = "${userConfig.user}";
@@ -42,6 +47,7 @@
     ccache
     swig
     llvmPackages.lld
+    nixfmt
 
     # security / reversing
     binwalk
