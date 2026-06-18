@@ -25,6 +25,7 @@
           # $ nix-env -qaP | grep wget
           environment.systemPackages = [
           ];
+          environment.shells = [ pkgs.fish ];
 
           # Necessary for using flakes on this system.
           # nix.settings.experimental-features = "nix-command flakes";
@@ -36,6 +37,68 @@
           # Set Git commit hash for darwin-version.
           system.configurationRevision = self.rev or self.dirtyRev or null;
 
+          system.primaryUser = "${userConfig.user}";
+          system.defaults = {
+            # Trackpad
+            trackpad = {
+              Clicking = true; # Applied correctly, ignored by System Settings UI (macOS 15)
+              ActuationStrength = 0;
+            };
+            # Dock
+            dock = {
+              autohide = true;
+              show-recents = false;
+              expose-group-apps = true;
+            };
+            # Finder
+            finder = {
+              AppleShowAllExtensions = true; # Applied correctly, ignored by System Settings UI (macOS 15)
+              AppleShowAllFiles = true; # Requires `killall Finder` to take effect
+              ShowPathbar = true;
+              FXRemoveOldTrashItems = true;
+              NewWindowTarget = "Home";
+            };
+            # User dictionary
+            NSGlobalDomain = {
+              NSAutomaticCapitalizationEnabled = false;
+              NSAutomaticDashSubstitutionEnabled = false;
+              NSAutomaticSpellingCorrectionEnabled = false;
+              NSAutomaticQuoteSubstitutionEnabled = false;
+              NSAutomaticPeriodSubstitutionEnabled = false;
+            };
+            # ScreenSaver
+            screensaver = {
+              askForPassword = true;
+              askForPasswordDelay = 0;
+            };
+            # ControlCenter
+            controlcenter.BatteryShowPercentage = true;
+          };
+
+          system.startup.chime = false;
+
+          system.defaults.CustomUserPreferences = {
+            "com.apple.systemsound" = {
+              "com.apple.sound.uiaudio.enabled" = 0;
+            };
+            "com.apple.PowerChime" = {
+              "ChimeOnAllHardware" = false;
+              "ChimeOnNoHardware" = true;
+            };
+            NSGlobalDomain = {
+              "com.apple.sound.beep.volume" = 0.0;
+              "com.apple.sound.beep.feedback" = 0.0;
+            };
+          };
+
+          networking.applicationFirewall.enable = true;
+
+          security.pam.services.sudo_local.touchIdAuth = true;
+
+          launchd.user.agents."com.apple.rcd" = {
+            serviceConfig.Disabled = true;
+          };
+
           # Used for backwards compatibility, please read the changelog before changing.
           # $ darwin-rebuild changelog
           system.stateVersion = 6;
@@ -45,6 +108,7 @@
           users.users."${userConfig.user}" = {
             name = "${userConfig.user}";
             home = "/Users/${userConfig.user}";
+            shell = pkgs.fish;
           };
         };
     in
