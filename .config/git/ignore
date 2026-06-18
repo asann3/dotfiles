@@ -1,5 +1,9 @@
 .DS_Store
 .asann3/
 .serena/
+AGENTS.md
+CLAUDE.md
+SPEC.md
+.claude/
 
 **/.claude/settings.local.json
