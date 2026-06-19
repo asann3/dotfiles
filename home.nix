@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   userConfig,
   ...
@@ -93,6 +94,30 @@
       credential.helper = "osxkeychain";
     };
   };
+
+  # macOS keyboard shortcuts (com.apple.symbolichotkeys).
+  # -dict-add touches only the listed IDs; other shortcuts are preserved.
+  home.activation.symbolicHotkeys =
+    let
+      shift = 131072;
+      control = 262144;
+      ctrlShift = control + shift;
+      sym = ''/usr/bin/defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add'';
+      # XML plist keeps integer/bool types; legacy "{a=b;}" stores strings and is ignored by WindowServer
+      bind = id: char: code: mods:
+        ''run ${sym} ${toString id} '<dict><key>enabled</key><true/><key>value</key><dict><key>type</key><string>standard</string><key>parameters</key><array><integer>${toString char}</integer><integer>${toString code}</integer><integer>${toString mods}</integer></array></dict></dict>' '';
+      disable = id: ''run ${sym} ${toString id} '<dict><key>enabled</key><false/></dict>' '';
+    in
+    config.lib.dag.entryAfter [ "writeBoundary" ] ''
+      # Mission Control: move left / right a space (Ctrl+Shift+H / Ctrl+Shift+L)
+      ${bind 79 104 4 ctrlShift}
+      ${bind 81 108 37 ctrlShift}
+
+      # Accessibility shortcuts: disable all
+      ${lib.concatMapStringsSep "\n" disable [ 15 17 19 21 23 25 26 59 162 179 ]}
+
+      run --quiet /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u || true
+    '';
 
   programs.home-manager.enable = true;
   programs.fish = {

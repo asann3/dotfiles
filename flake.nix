@@ -89,6 +89,14 @@
               "com.apple.sound.beep.volume" = 0.0;
               "com.apple.sound.beep.feedback" = 0.0;
             };
+            # Japanese input (Kotoeri): enable Windows-style key operation
+            "com.apple.inputmethod.Kotoeri" = {
+              JIMPrefWindowsModeKey = 1;
+            };
+            # Amethyst: resize windows using mouse
+            "com.amethyst.Amethyst" = {
+              "mouse-resizes-windows" = 1;
+            };
           };
 
           networking.applicationFirewall.enable = true;
