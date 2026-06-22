@@ -35,10 +35,16 @@ cat > "$DOTFILES/user.nix" <<EOF
 EOF
 git -C "$DOTFILES" add --sparse user.nix
 
+# nix-darwin manages sudo_local; remove the manually written file before activation
+sudo rm -f /etc/pam.d/sudo_local
+
 nix build "path:$DOTFILES#darwinConfigurations.$(hostname -s).system"
-sudo ./result/sw/bin/darwin-rebuild switch --flake "path:$DOTFILES"
+sudo ./result/sw/bin/darwin-rebuild switch --flake "path:$DOTFILES#$(hostname -s)"
 
 git -C "$DOTFILES" update-index --skip-worktree user.nix
+
+# Set fish as default shell (nix-darwin doesn't manage this on macOS without uid)
+chsh -s /run/current-system/sw/bin/fish
 
 # git user config via GitHub (requires gh auth login first)
 if command -v gh &>/dev/null && gh auth status &>/dev/null 2>&1; then
@@ -57,5 +63,6 @@ nightlight temp 85 && nightlight schedule 21:00 7:00
 # agy (Google Antigravity CLI) — not available via nix/brew
 if ! command -v agy &>/dev/null; then
   curl -fsSL https://antigravity.google/cli/install.sh | bash
+  export PATH="$HOME/.local/bin:$PATH"
   agy install --skip-path
 fi

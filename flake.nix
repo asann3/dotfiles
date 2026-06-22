@@ -96,6 +96,7 @@
 
           };
 
+          networking.hostName = "${userConfig.host}";
           networking.applicationFirewall.enable = true;
 
           security.pam.services.sudo_local.touchIdAuth = true;
