@@ -46,13 +46,12 @@ git -C "$DOTFILES" update-index --skip-worktree user.nix
 # Set fish as default shell (nix-darwin doesn't manage this on macOS without uid)
 chsh -s /run/current-system/sw/bin/fish
 
-# git user config via GitHub (requires gh auth login first)
-if command -v gh &>/dev/null && gh auth status &>/dev/null 2>&1; then
-  GH_ID=$(gh api user --jq '.id')
-  GH_LOGIN=$(gh api user --jq '.login')
-  git config --global user.name "$GH_LOGIN"
-  git config --global user.email "${GH_ID}+${GH_LOGIN}@users.noreply.github.com"
-fi
+# git user config via GitHub
+gh auth status &>/dev/null 2>&1 || gh auth login
+GH_ID=$(gh api user --jq '.id')
+GH_LOGIN=$(gh api user --jq '.login')
+git config --global user.name "$GH_LOGIN"
+git config --global user.email "${GH_ID}+${GH_LOGIN}@users.noreply.github.com"
 
 # Night Shift (21:00-7:00, temp 85)
 brew tap smudge/smudge
