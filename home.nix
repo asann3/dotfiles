@@ -11,6 +11,12 @@
   home.homeDirectory = "/Users/${userConfig.user}";
 
   home.packages = with pkgs; [
+    # terminal emulator
+    ghostty-bin
+
+    # AI tools
+    claude-code
+
     # shell / terminal
     tmux
     tree

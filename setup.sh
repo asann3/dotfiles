@@ -24,3 +24,9 @@ git update-index --skip-worktree user.nix
 
 nix build .#darwinConfigurations."$(hostname -s)".system
 sudo ./result/sw/bin/darwin-rebuild switch --flake .
+
+# agy (Google Antigravity CLI) — not available via nix/brew
+if ! command -v agy &>/dev/null; then
+  curl -fsSL https://antigravity.google/cli/install.sh | bash
+  agy install --skip-path
+fi
