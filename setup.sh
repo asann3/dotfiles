@@ -33,7 +33,7 @@ link .zsh/.p10k.zsh ~/.p10k.zsh
 cat > "$DOTFILES/user.nix" <<EOF
 { user = "$(whoami)"; host = "$(hostname -s)"; }
 EOF
-git -C "$DOTFILES" add user.nix
+git -C "$DOTFILES" add --sparse user.nix
 
 nix build "path:$DOTFILES#darwinConfigurations.$(hostname -s).system"
 sudo ./result/sw/bin/darwin-rebuild switch --flake "path:$DOTFILES"
