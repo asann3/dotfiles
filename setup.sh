@@ -40,6 +40,9 @@ if command -v gh &>/dev/null && gh auth status &>/dev/null 2>&1; then
   git config --global user.email "${GH_ID}+${GH_LOGIN}@users.noreply.github.com"
 fi
 
+# Night Shift (21:00-7:00, temp 85)
+nightlight temp 85 && nightlight schedule 21:00 7:00
+
 # agy (Google Antigravity CLI) — not available via nix/brew
 if ! command -v agy &>/dev/null; then
   curl -fsSL https://antigravity.google/cli/install.sh | bash
