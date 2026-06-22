@@ -10,5 +10,6 @@ DOTFILES_PATH=$HOME/dotfiles
 source $DOTFILES_PATH/.zsh/plugins.zsh
 
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+export PATH="$HOME/.local/bin:$PATH"
 # To customize prompt, run `p10k configure` or edit ~/dotfiles/.zsh/.p10k.zsh.
 [[ ! -f ~/dotfiles/.zsh/.p10k.zsh ]] || source ~/dotfiles/.zsh/.p10k.zsh
