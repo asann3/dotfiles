@@ -3,6 +3,12 @@ set -e
 
 DOTFILES="$(cd "$(dirname "$0")" && pwd)"
 
+# Install Homebrew if not present
+if ! command -v brew &>/dev/null; then
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+brew bundle --file="$DOTFILES/.Brewfile"
+
 # Install Nix if not present
 if ! command -v nix &>/dev/null; then
   curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
@@ -24,6 +30,14 @@ git update-index --skip-worktree user.nix
 
 nix build .#darwinConfigurations."$(hostname -s)".system
 sudo ./result/sw/bin/darwin-rebuild switch --flake .
+
+# git user config via GitHub (requires gh auth login first)
+if command -v gh &>/dev/null && gh auth status &>/dev/null 2>&1; then
+  GH_ID=$(gh api user --jq '.id')
+  GH_LOGIN=$(gh api user --jq '.login')
+  git config --global user.name "$GH_LOGIN"
+  git config --global user.email "${GH_ID}+${GH_LOGIN}@users.noreply.github.com"
+fi
 
 # agy (Google Antigravity CLI) — not available via nix/brew
 if ! command -v agy &>/dev/null; then
