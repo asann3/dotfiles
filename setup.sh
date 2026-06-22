@@ -22,6 +22,7 @@ link .vimrc ~/.vimrc
 link .zshrc ~/.zshrc
 link .config/karabiner/karabiner.json ~/.config/karabiner/karabiner.json
 link .config/karabiner/assets/complex_modifications ~/.config/karabiner/assets/complex_modifications
+link .zsh/.p10k.zsh ~/.p10k.zsh
 
 # Personalize user.nix (BSD sed: runs before nix provides GNU sed)
 sed -i '' "s/username/$(whoami)/g" user.nix

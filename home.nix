@@ -98,6 +98,7 @@
       init.defaultBranch = "main";
       pull.rebase = true;
       credential.helper = "osxkeychain";
+      core.excludesFile = "~/.config/git/ignore";
     };
   };
 
@@ -126,6 +127,7 @@
     '';
 
   home.file.".amethyst.yml".source = ./.amethyst.yml;
+  home.file.".config/git/ignore".source = ./.config/git/ignore;
 
   programs.home-manager.enable = true;
   programs.fish = {
