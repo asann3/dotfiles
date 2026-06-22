@@ -1,0 +1,42 @@
+{
+  "title": "左右Option 英数・かな切り替え",
+  "rules": [
+    {
+      "description": "Optionキーを単体で押したときに、英数・かなキーを送信する。（左Optionは英数、右Optionはかな）",
+      "manipulators": [
+        {
+          "from": {
+            "key_code": "left_option",
+            "modifiers": { "optional": ["any"] }
+          },
+          "parameters": { "basic.to_if_held_down_threshold_milliseconds": 100 },
+          "to": [
+            {
+              "key_code": "left_option",
+              "lazy": true
+            }
+          ],
+          "to_if_alone": [{ "key_code": "japanese_eisuu" }],
+          "to_if_held_down": [{ "key_code": "left_option" }],
+          "type": "basic"
+        },
+        {
+          "from": {
+            "key_code": "right_option",
+            "modifiers": { "optional": ["any"] }
+          },
+          "parameters": { "basic.to_if_held_down_threshold_milliseconds": 100 },
+          "to": [
+            {
+              "key_code": "right_option",
+              "lazy": true
+            }
+          ],
+          "to_if_alone": [{ "key_code": "japanese_kana" }],
+          "to_if_held_down": [{ "key_code": "right_option" }],
+          "type": "basic"
+        }
+      ]
+    }
+  ]
+}

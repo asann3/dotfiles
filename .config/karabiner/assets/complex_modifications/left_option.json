@@ -1,0 +1,30 @@
+{
+  "title": "Left Option 英数切り替え（ショートカット対応）",
+  "rules": [
+    {
+      "description": "Left Option: 単体で英数、組み合わせで通常のOption",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "left_option",
+            "modifiers": {
+              "optional": ["any"]
+            }
+          },
+          "to": [
+            {
+              "key_code": "left_option",
+              "lazy": true
+            }
+          ],
+          "to_if_alone": [
+            {
+              "key_code": "japanese_eisuu"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

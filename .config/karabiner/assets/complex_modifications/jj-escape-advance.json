@@ -1,0 +1,111 @@
+{
+  "title": "日本語入力時のみ jj連続押し → ESC",
+  "rules": [
+    {
+      "description": "jj連続押し → Escape + 英数（日本語入力時のみ）",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "j",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "delete_or_backspace"
+            },
+            {
+              "key_code": "escape"
+            },
+            {
+              "key_code": "japanese_eisuu"
+            },
+            {
+              "set_variable": {
+                "name": "j_pressed_ja",
+                "value": 0
+              }
+            }
+          ],
+          "conditions": [
+            {
+              "type": "input_source_if",
+              "input_sources": [
+                {
+                  "language": "ja"
+                }
+              ]
+            },
+            {
+              "type": "variable_if",
+              "name": "j_pressed_ja",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "j",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "set_variable": {
+                "name": "j_pressed_ja",
+                "value": 1
+              }
+            },
+            {
+              "key_code": "j"
+            }
+          ],
+          "to_delayed_action": {
+            "to_if_invoked": [
+              {
+                "set_variable": {
+                  "name": "j_pressed_ja",
+                  "value": 0
+                }
+              }
+            ],
+            "to_if_canceled": [
+              {
+                "set_variable": {
+                  "name": "j_pressed_ja",
+                  "value": 0
+                }
+              }
+            ]
+          },
+          "conditions": [
+            {
+              "type": "input_source_if",
+              "input_sources": [
+                {
+                  "language": "ja"
+                }
+              ]
+            },
+            {
+              "type": "variable_if",
+              "name": "j_pressed_ja",
+              "value": 0
+            }
+          ],
+          "parameters": {
+            "basic.to_delayed_action_delay_milliseconds": 200
+          }
+        }
+      ]
+    }
+  ]
+}
