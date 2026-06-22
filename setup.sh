@@ -43,6 +43,9 @@ sudo ./result/sw/bin/darwin-rebuild switch --flake "path:$DOTFILES#$(hostname -s
 
 git -C "$DOTFILES" update-index --skip-worktree user.nix
 
+# Refresh PATH to include nix-managed binaries installed by darwin-rebuild
+export PATH="/run/current-system/sw/bin:$HOME/.nix-profile/bin:$PATH"
+
 # Set fish as default shell (nix-darwin doesn't manage this on macOS without uid)
 chsh -s /run/current-system/sw/bin/fish
 
