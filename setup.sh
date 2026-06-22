@@ -43,6 +43,8 @@ if command -v gh &>/dev/null && gh auth status &>/dev/null 2>&1; then
 fi
 
 # Night Shift (21:00-7:00, temp 85)
+brew tap smudge/smudge
+brew install smudge/smudge/nightlight
 nightlight temp 85 && nightlight schedule 21:00 7:00
 
 # agy (Google Antigravity CLI) — not available via nix/brew
