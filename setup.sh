@@ -29,14 +29,16 @@ link .config/karabiner/karabiner.json ~/.config/karabiner/karabiner.json
 link .config/karabiner/assets/complex_modifications ~/.config/karabiner/assets/complex_modifications
 link .zsh/.p10k.zsh ~/.p10k.zsh
 
-# Personalize user.nix (overwrite each run so it's always correct)
+# Personalize user.nix and stage it so nix can read it from git index
 cat > "$DOTFILES/user.nix" <<EOF
 { user = "$(whoami)"; host = "$(hostname -s)"; }
 EOF
-git update-index --skip-worktree "$DOTFILES/user.nix"
+git -C "$DOTFILES" add user.nix
 
 nix build "path:$DOTFILES#darwinConfigurations.$(hostname -s).system"
 sudo ./result/sw/bin/darwin-rebuild switch --flake "path:$DOTFILES"
+
+git -C "$DOTFILES" update-index --skip-worktree user.nix
 
 # git user config via GitHub (requires gh auth login first)
 if command -v gh &>/dev/null && gh auth status &>/dev/null 2>&1; then
