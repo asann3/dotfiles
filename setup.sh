@@ -3,9 +3,8 @@ set -e
 
 DOTFILES="$(cd "$(dirname "$0")" && pwd)"
 
-# Cache sudo credentials for the duration of this script
-sudo -v
-while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+# Enable Touch ID for sudo before brew bundle runs
+echo "auth sufficient pam_tid.so" | sudo tee /etc/pam.d/sudo_local > /dev/null
 
 # Install Homebrew if not present
 if ! command -v brew &>/dev/null; then
