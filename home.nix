@@ -119,6 +119,8 @@
       run --quiet /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u || true
     '';
 
+  home.file.".amethyst.yml".source = ./.amethyst.yml;
+
   programs.home-manager.enable = true;
   programs.fish = {
     enable = true;

@@ -1,0 +1,14 @@
+mod1:
+  - option
+  - shift
+
+layouts:
+  - tall
+  - wide
+  - fullscreen
+  - column
+
+mouse-resizes-windows: true
+
+floating:
+  - id: com.apple.systempreferences
