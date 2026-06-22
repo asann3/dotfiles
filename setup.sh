@@ -29,13 +29,14 @@ link .config/karabiner/karabiner.json ~/.config/karabiner/karabiner.json
 link .config/karabiner/assets/complex_modifications ~/.config/karabiner/assets/complex_modifications
 link .zsh/.p10k.zsh ~/.p10k.zsh
 
-# Personalize user.nix (BSD sed: runs before nix provides GNU sed)
-sed -i '' "s/username/$(whoami)/g" user.nix
-sed -i '' "s/hostname/$(hostname -s)/g" user.nix
-git update-index --skip-worktree user.nix
+# Personalize user.nix (overwrite each run so it's always correct)
+cat > "$DOTFILES/user.nix" <<EOF
+{ user = "$(whoami)"; host = "$(hostname -s)"; }
+EOF
+git update-index --skip-worktree "$DOTFILES/user.nix"
 
-nix build .#darwinConfigurations."$(hostname -s)".system
-sudo ./result/sw/bin/darwin-rebuild switch --flake .
+nix build "path:$DOTFILES#darwinConfigurations.$(hostname -s).system"
+sudo ./result/sw/bin/darwin-rebuild switch --flake "path:$DOTFILES"
 
 # git user config via GitHub (requires gh auth login first)
 if command -v gh &>/dev/null && gh auth status &>/dev/null 2>&1; then
