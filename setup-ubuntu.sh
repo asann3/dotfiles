@@ -115,10 +115,9 @@ cat > "$DOTFILES/user.nix" <<EOF
 { user = "$(whoami)"; host = "$(hostname -s)"; }
 EOF
 git -C "$DOTFILES" add --sparse user.nix
+git -C "$DOTFILES" update-index --skip-worktree user.nix
 
 nix run github:nix-community/home-manager/master -- switch --flake "path:$DOTFILES#$(whoami)@$(hostname -s)"
-
-git -C "$DOTFILES" update-index --skip-worktree user.nix
 
 export PATH="$HOME/.nix-profile/bin:$PATH"
 
