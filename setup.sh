@@ -53,8 +53,8 @@ chsh -s /run/current-system/sw/bin/fish
 gh auth status &>/dev/null 2>&1 || gh auth login
 GH_ID=$(gh api user --jq '.id')
 GH_LOGIN=$(gh api user --jq '.login')
-git config --global user.name "$GH_LOGIN"
-git config --global user.email "${GH_ID}+${GH_LOGIN}@users.noreply.github.com"
+git config --file "$HOME/.gitconfig" user.name "$GH_LOGIN"
+git config --file "$HOME/.gitconfig" user.email "${GH_ID}+${GH_LOGIN}@users.noreply.github.com"
 
 # Night Shift (21:00-7:00, temp 85)
 brew tap smudge/smudge
