@@ -21,7 +21,7 @@ if ! command -v nix &>/dev/null; then
 fi
 
 # Symlinks (absolute source paths required)
-link() { mkdir -p "$(dirname "$2")" && ln -sf "$DOTFILES/$1" "$2"; }
+link() { mkdir -p "$(dirname "$2")" && ln -sfh "$DOTFILES/$1" "$2"; }
 link .tmux.conf ~/.tmux.conf
 link .vimrc ~/.vimrc
 link .zshrc ~/.zshrc
