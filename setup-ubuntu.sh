@@ -18,7 +18,10 @@ im-config -n ibus
 if [ "$KEYBOARD" = "us" ]; then
   # Remap Alt_L → Muhenkan, Alt_R → Henkan at kernel level (Wayland-safe)
   # "overload": tap alone sends the key, held with other keys acts as Alt
-  sudo apt install -y keyd
+  # keyd is not in Ubuntu repos; build from source
+  git clone --depth 1 https://github.com/rvaiya/keyd /tmp/keyd
+  make -C /tmp/keyd && sudo make -C /tmp/keyd install
+  rm -rf /tmp/keyd
   sudo mkdir -p /etc/keyd
   sudo tee /etc/keyd/default.conf > /dev/null << 'EOF'
 [ids]
