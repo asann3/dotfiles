@@ -123,7 +123,9 @@ git -C "$DOTFILES" update-index --skip-worktree user.nix
 export PATH="$HOME/.nix-profile/bin:$PATH"
 
 # Set fish as default shell
-chsh -s "$(which fish)"
+FISH_PATH="$(which fish)"
+grep -qx "$FISH_PATH" /etc/shells || echo "$FISH_PATH" | sudo tee -a /etc/shells
+chsh -s "$FISH_PATH"
 
 # ===== git user config =====
 gh auth status &>/dev/null 2>&1 || gh auth login
