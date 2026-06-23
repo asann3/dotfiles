@@ -124,7 +124,7 @@ export PATH="$HOME/.nix-profile/bin:$PATH"
 # Set fish as default shell
 FISH_PATH="$(which fish)"
 grep -qx "$FISH_PATH" /etc/shells || echo "$FISH_PATH" | sudo tee -a /etc/shells
-chsh -s "$FISH_PATH"
+sudo usermod -s "$FISH_PATH" "$USER"
 
 # ===== git user config =====
 gh auth status &>/dev/null 2>&1 || gh auth login
