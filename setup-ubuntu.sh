@@ -8,7 +8,7 @@ KEYBOARD=${KEYBOARD:-jp}
 
 # Base packages
 sudo apt update && sudo apt upgrade -y
-sudo apt install -y curl git build-essential
+sudo apt install -y curl git build-essential clang
 
 # ===== Japanese IME: IBus + Mozc =====
 # IBus is more stable than fcitx5 under GNOME + Wayland
