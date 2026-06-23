@@ -1,3 +1,4 @@
+brew "gh"
 brew "lima"
 brew "flyctl"
 brew "qemu"
