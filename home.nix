@@ -88,6 +88,7 @@
     ollama
 
     # misc
+    bitwarden-desktop
     sl
   ];
 
