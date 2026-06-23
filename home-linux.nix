@@ -84,6 +84,13 @@ in
     ".config/git/ignore".source = ./.config/git/ignore;
   };
 
+  dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      color-scheme = "prefer-dark";
+      gtk-theme = "Yaru-dark";
+    };
+  };
+
   programs.home-manager.enable = true;
   programs.fish = {
     enable = true;
