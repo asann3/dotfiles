@@ -139,6 +139,7 @@
 
     shellInit = ''
       fish_add_path ~/bin/xelatex
+      fish_add_path ~/.local/bin
     '';
 
     interactiveShellInit = ''
