@@ -18,6 +18,10 @@
     }:
     let
       userConfig = import ./user.nix;
+      linuxPkgs = import nixpkgs {
+        system = "x86_64-linux";
+        config.allowUnfree = true;
+      };
       configuration =
         { pkgs, ... }:
         {
@@ -120,6 +124,14 @@
         };
     in
     {
+      # Build linux home-manager using:
+      # $ nix run github:nix-community/home-manager/master -- switch --flake .#"user@host"
+      homeConfigurations."${userConfig.user}@${userConfig.host}" = home-manager.lib.homeManagerConfiguration {
+        pkgs = linuxPkgs;
+        modules = [ ./home-linux.nix ];
+        extraSpecialArgs = { inherit userConfig; };
+      };
+
       # Build darwin flake using:
       # $ darwin-rebuild build --flake .#${userConfig.host}
       darwinConfigurations."${userConfig.host}" = nix-darwin.lib.darwinSystem {
