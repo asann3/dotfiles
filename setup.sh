@@ -12,7 +12,41 @@ if ! command -v brew &>/dev/null; then
 fi
 # Add Homebrew to PATH (Apple Silicon: /opt/homebrew, Intel: /usr/local)
 eval "$(/opt/homebrew/bin/brew shellenv 2>/dev/null || /usr/local/bin/brew shellenv)"
-brew bundle --file="$DOTFILES/.Brewfile"
+brew bundle --file="$DOTFILES/.Brewfile" --verbose
+
+# Verify cask apps actually exist; reinstall if brew thinks installed but app is missing
+mapfile -t _casks < <(grep '^cask' "$DOTFILES/.Brewfile" | sed 's/cask "\(.*\)"/\1/')
+mapfile -t _reinstall < <(brew info --cask --json=v2 "${_casks[@]}" 2>/dev/null | python3 -c "
+import json,sys,os,subprocess
+
+def pkgutil_installed(ids):
+  all_pkgs=None
+  for i in (ids if isinstance(ids,list) else [ids]):
+    if '*' in i:
+      if all_pkgs is None:
+        all_pkgs=subprocess.run(['pkgutil','--pkgs'],capture_output=True,text=True).stdout
+      if any(l.startswith(i.replace('*','')) for l in all_pkgs.splitlines()): return True
+    elif subprocess.run(['pkgutil','--pkg-info',i],capture_output=True).returncode==0: return True
+  return False
+
+for cask in json.load(sys.stdin)['casks']:
+  name=cask['token']; arts=cask.get('artifacts',[])
+  app_path=next(('/Applications/'+a['app'][0] for a in arts if isinstance(a,dict) and 'app' in a),None)
+  if app_path:
+    if not os.path.exists(app_path): print(name)
+    continue
+  for a in arts:
+    if not isinstance(a,dict): continue
+    for u in a.get('uninstall',[]):
+      if isinstance(u,dict) and 'pkgutil' in u:
+        if not pkgutil_installed(u['pkgutil']): print(name)
+        break
+    else: continue
+    break
+")
+for _cask in "${_reinstall[@]}"; do
+  brew reinstall --cask "$_cask"
+done
 
 # Install Nix if not present
 if ! command -v nix &>/dev/null; then
