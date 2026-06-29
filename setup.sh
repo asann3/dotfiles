@@ -21,7 +21,7 @@ if ! command -v nix &>/dev/null; then
 fi
 
 # Symlinks (absolute source paths required)
-link() { mkdir -p "$(dirname "$2")" && ln -sfh "$DOTFILES/$1" "$2"; }
+link() { mkdir -p "$(dirname "$2")" && ln -sfn "$DOTFILES/$1" "$2"; }
 link .tmux.conf ~/.tmux.conf
 link .vimrc ~/.vimrc
 link .zshrc ~/.zshrc
@@ -47,7 +47,8 @@ git -C "$DOTFILES" update-index --skip-worktree user.nix
 export PATH="/run/current-system/sw/bin:$HOME/.nix-profile/bin:$PATH"
 
 # Set fish as default shell (nix-darwin doesn't manage this on macOS without uid)
-chsh -s /run/current-system/sw/bin/fish
+FISH=/run/current-system/sw/bin/fish
+[[ "$(dscl . -read /Users/"$USER" UserShell | awk '{print $2}')" != "$FISH" ]] && chsh -s "$FISH"
 
 # git user config via GitHub
 gh auth status &>/dev/null 2>&1 || gh auth login
