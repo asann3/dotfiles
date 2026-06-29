@@ -1,4 +1,5 @@
 brew "gh"
+brew "pam-reattach"
 brew "lima"
 brew "flyctl"
 brew "qemu"

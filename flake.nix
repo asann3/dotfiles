@@ -103,7 +103,11 @@
           networking.hostName = "${userConfig.host}";
           networking.applicationFirewall.enable = true;
 
-          security.pam.services.sudo_local.touchIdAuth = true;
+          # pam_reattach reattaches to user session so Touch ID UI is available (macOS 26: pam_tid.so.2)
+          environment.etc."pam.d/sudo_local".text = ''
+            auth optional /opt/homebrew/lib/pam/pam_reattach.so
+            auth sufficient pam_tid.so.2
+          '';
 
           launchd.user.agents."com.apple.rcd" = {
             serviceConfig.Disabled = true;

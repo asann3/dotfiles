@@ -4,7 +4,7 @@ set -e
 DOTFILES="$(cd "$(dirname "$0")" && pwd)"
 
 # Enable Touch ID for sudo before brew bundle runs
-echo "auth sufficient pam_tid.so" | sudo tee /etc/pam.d/sudo_local > /dev/null
+printf 'auth optional /opt/homebrew/lib/pam/pam_reattach.so\nauth sufficient pam_tid.so.2\n' | sudo tee /etc/pam.d/sudo_local > /dev/null
 
 # Install Homebrew if not present
 if ! command -v brew &>/dev/null; then
