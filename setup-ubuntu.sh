@@ -104,6 +104,13 @@ active_on_launch: False
 EOF
 ibus write-cache
 
+# Disable mozc_renderer so IBus handles candidate window
+sudo sed -i 's|ibus-engine-mozc --ibus|ibus-engine-mozc --ibus --use_mozc_renderer=false|' /usr/share/ibus/component/mozc.xml
+ibus write-cache
+
+# IBus embed-preedit off (for CLI tools like Claude Code)
+gsettings set org.freedesktop.ibus.general embed-preedit-text false
+
 # ===== GNOME tools =====
 sudo apt install -y gnome-shell-extension-manager gnome-tweaks
 
