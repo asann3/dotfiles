@@ -55,9 +55,6 @@ in
 
     # media
     ffmpeg
-
-    # GNOME extensions
-    gnomeExtensions.night-theme-switcher
   ];
 
   programs.git = {
@@ -84,10 +81,32 @@ in
     ".config/git/ignore".source = ./.config/git/ignore;
   };
 
+  home.activation.installNightThemeSwitcher = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    EXT_ID="nightthemeswitcher@romainvigier.fr"
+    EXT_DIR="$HOME/.local/share/gnome-shell/extensions/$EXT_ID"
+
+    if [ ! -d "$EXT_DIR" ]; then
+      GNOME_VER=$(gnome-shell --version | grep -oP '\d+' | head -1)
+      TMP=$(mktemp -d)
+      VERSION_TAG=$(${pkgs.curl}/bin/curl -sf \
+        "https://extensions.gnome.org/extension-info/?uuid=$EXT_ID&shell_version=$GNOME_VER" \
+        | ${pkgs.python3}/bin/python3 -c \
+          'import sys,json; print(json.load(sys.stdin)["version_tag"])')
+      ${pkgs.curl}/bin/curl -sL \
+        "https://extensions.gnome.org/download-extension/$EXT_ID.shell-extension.zip?version_tag=$VERSION_TAG" \
+        -o "$TMP/ext.zip"
+      /usr/bin/gnome-extensions install --force "$TMP/ext.zip"
+      rm -rf "$TMP"
+    fi
+  '';
+
   dconf.settings = {
-    "org/gnome/desktop/interface" = {
-      color-scheme = "prefer-dark";
-      gtk-theme = "Yaru-dark";
+    "org/gnome/shell/extensions/nightthemeswitcher/time" = {
+      manual-schedule = true;
+      sunrise = 7.0;
+      sunset = 21.0;
+      fullscreen-transition = true;
+      nightthemeswitcher-ondemand-keybinding = [ "<Shift><Super>t" ];
     };
   };
 
