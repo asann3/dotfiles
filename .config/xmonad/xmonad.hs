@@ -40,6 +40,7 @@ myKeys =
   , ((myMod .|. shiftMask, xK_l),      sendMessage Expand)
   , ((myMod .|. shiftMask, xK_c),      kill)
   , ((myMod .|. shiftMask, xK_q),      kill)
+  , ((myMod,               xK_l),      spawn "xscreensaver-command -lock")
   ]
   ++
   [ ((myMod .|. shiftMask, k), windows (W.greedyView ws))
@@ -73,6 +74,7 @@ myLayout = avoidStruts . spacingRaw False (Border 5 5 5 5) True (Border 5 5 5 5)
 
 myStartupHook :: X ()
 myStartupHook = do
+  spawnOnce "xscreensaver -no-splash"
   spawnOnce "dbus-update-activation-environment --systemd DISPLAY XAUTHORITY"
   spawnOnce "nm-applet"
   spawnOnce "xsetroot -cursor_name left_ptr"
