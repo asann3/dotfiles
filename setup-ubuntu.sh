@@ -13,6 +13,9 @@ sudo apt install -y curl git build-essential clang wl-clipboard xclip
 # ===== xmonad =====
 sudo apt install -y xmonad libghc-xmonad-contrib-dev xmobar
 
+# ===== theme switching =====
+sudo apt install -y xsettingsd xsct xdg-desktop-portal-gtk
+
 # ===== Japanese IME: IBus + Mozc =====
 # IBus is more stable than fcitx5 under GNOME + Wayland
 sudo apt install -y ibus ibus-mozc

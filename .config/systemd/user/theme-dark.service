@@ -1,0 +1,7 @@
+[Unit]
+Description=Switch to dark theme
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/theme-switch dark
+Environment=DISPLAY=:1

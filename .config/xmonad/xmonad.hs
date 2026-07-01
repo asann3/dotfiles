@@ -79,6 +79,9 @@ myStartupHook = do
   spawnOnce "dbus-update-activation-environment --systemd DISPLAY XAUTHORITY"
   spawnOnce "nm-applet"
   spawnOnce "xsetroot -cursor_name left_ptr"
+  spawnOnce "xsettingsd"
+  spawnOnce "/usr/libexec/xdg-desktop-portal-gtk"
+  spawnOnce "theme-switch auto"
   spawnOnce "ibus-daemon --xim --replace -d && sleep 2 && ibus engine mozc-us"
   spawnOnce "gnome-terminal"
 

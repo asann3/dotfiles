@@ -82,6 +82,12 @@ in
     ".xprofile".source = ./.xprofile;
     ".config/xmonad/xmonad.hs".source = ./.config/xmonad/xmonad.hs;
     ".config/xmobar/xmobarrc".source = ./.config/xmobar/xmobarrc;
+    ".local/bin/theme-switch".source = ./.local/bin/theme-switch;
+    ".config/systemd/user/theme-light.service".source = ./.config/systemd/user/theme-light.service;
+    ".config/systemd/user/theme-dark.service".source = ./.config/systemd/user/theme-dark.service;
+    ".config/systemd/user/theme-light.timer".source = ./.config/systemd/user/theme-light.timer;
+    ".config/systemd/user/theme-dark.timer".source = ./.config/systemd/user/theme-dark.timer;
+    ".config/xsettingsd/xsettingsd.conf".source = ./.config/xsettingsd/xsettingsd.conf;
   };
 
   home.activation.installNightThemeSwitcher = lib.hm.dag.entryAfter ["writeBoundary"] ''

@@ -1,0 +1,40 @@
+#!/bin/bash
+# Usage: theme-switch [light|dark|auto]
+# auto: determine by current hour (7:00-21:00 = light, else dark)
+
+XSETTINGS_CONF="$HOME/.config/xsettingsd/xsettingsd.conf"
+
+apply_light() {
+    gsettings set org.gnome.desktop.interface color-scheme 'default'
+    gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita'
+    sed -i 's/Net\/ThemeName .*/Net\/ThemeName "Adwaita"/' "$XSETTINGS_CONF"
+    pkill -HUP xsettingsd 2>/dev/null || true
+    pkill -f xdg-desktop-portal-gtk 2>/dev/null || true
+    sleep 1
+    /usr/libexec/xdg-desktop-portal-gtk &
+    xsct 6500
+}
+
+apply_dark() {
+    gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+    gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
+    sed -i 's/Net\/ThemeName .*/Net\/ThemeName "Adwaita-dark"/' "$XSETTINGS_CONF"
+    pkill -HUP xsettingsd 2>/dev/null || true
+    pkill -f xdg-desktop-portal-gtk 2>/dev/null || true
+    sleep 1
+    /usr/libexec/xdg-desktop-portal-gtk &
+    xsct 3500
+}
+
+case "${1:-auto}" in
+    light) apply_light ;;
+    dark)  apply_dark ;;
+    auto)
+        hour=$(date +%H)
+        if [ "$hour" -ge 7 ] && [ "$hour" -lt 21 ]; then
+            apply_light
+        else
+            apply_dark
+        fi
+        ;;
+esac

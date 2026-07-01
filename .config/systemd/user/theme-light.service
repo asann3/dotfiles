@@ -1,0 +1,7 @@
+[Unit]
+Description=Switch to light theme
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/theme-switch light
+Environment=DISPLAY=:1
