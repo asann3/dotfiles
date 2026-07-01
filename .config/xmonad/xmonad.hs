@@ -32,7 +32,8 @@ myConfig = def
 
 myKeys :: [((KeyMask, KeySym), X ())]
 myKeys =
-  [ ((myMod .|. shiftMask, xK_Return), spawn "gnome-terminal")
+  [ ((myMod,               xK_space),  spawn "rofi -show drun")
+  , ((myMod .|. shiftMask, xK_Return), spawn "gnome-terminal")
   , ((myMod .|. shiftMask, xK_space),  sendMessage NextLayout)
   , ((myMod .|. shiftMask, xK_j),      windows W.focusDown)
   , ((myMod .|. shiftMask, xK_k),      windows W.focusUp)
