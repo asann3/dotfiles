@@ -121,6 +121,10 @@ nix run github:nix-community/home-manager/master -- switch --flake "path:$DOTFIL
 
 export PATH="$HOME/.nix-profile/bin:$PATH"
 
+# ===== xmonad =====
+xmonad --recompile
+pgrep -x xmonad && xmonad --restart || true
+
 # Set fish as default shell
 FISH_PATH="$(which fish)"
 grep -qx "$FISH_PATH" /etc/shells || echo "$FISH_PATH" | sudo tee -a /etc/shells
