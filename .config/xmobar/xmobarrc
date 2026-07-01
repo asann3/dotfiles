@@ -1,0 +1,22 @@
+Config
+  { font        = "xft:Sans-10"
+  , bgColor     = "#2e3440"
+  , fgColor     = "#d8dee9"
+  , position    = Top
+  , persistent  = True
+  , commands    =
+      [ Run XMonadLog
+      , Run Cpu    ["-t", "CPU: <total>%", "-L", "10", "-H", "50", "--high", "#bf616a"] 10
+      , Run Memory ["-t", "Mem: <usedratio>%"] 10
+      , Run Date   "%m/%d %H:%M" "date" 10
+      , Run Battery
+          [ "-t", "Bat: <left>% <acstatus>"
+          , "--"
+          , "-O", "AC"
+          , "-o", ""
+          ] 50
+      ]
+  , sepChar  = "%"
+  , alignSep = "}{"
+  , template = " %XMonadLog% }{ %cpu%  %memory%  %battery%  <fc=#88c0d0>%date%</fc> "
+  }

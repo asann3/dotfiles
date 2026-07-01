@@ -79,6 +79,9 @@ in
     ".tmux.conf".source = ./.tmux.conf;
     ".vimrc".source = ./.vimrc;
     ".config/git/ignore".source = ./.config/git/ignore;
+    ".xprofile".source = ./.xprofile;
+    ".config/xmonad/xmonad.hs".source = ./.config/xmonad/xmonad.hs;
+    ".config/xmobar/xmobarrc".source = ./.config/xmobar/xmobarrc;
   };
 
   home.activation.installNightThemeSwitcher = lib.hm.dag.entryAfter ["writeBoundary"] ''
