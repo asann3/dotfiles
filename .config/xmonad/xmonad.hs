@@ -76,7 +76,7 @@ myLayout = avoidStruts . spacingRaw False (Border 5 5 5 5) True (Border 5 5 5 5)
 myStartupHook :: X ()
 myStartupHook = do
   spawnOnce "xscreensaver -no-splash"
-  spawnOnce "dbus-update-activation-environment --systemd DISPLAY XAUTHORITY"
+  spawnOnce "dbus-update-activation-environment --systemd DISPLAY XAUTHORITY GTK_IM_MODULE XMODIFIERS QT_IM_MODULE"
   spawnOnce "nm-applet"
   spawnOnce "xsetroot -cursor_name left_ptr"
   spawnOnce "xsettingsd"
