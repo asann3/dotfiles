@@ -124,6 +124,7 @@ in
     enable = true;
     shellInit = ''
       fish_add_path ~/.local/bin
+      set -gx EDITOR vim
     '';
     interactiveShellInit = ''
       if status is-interactive
