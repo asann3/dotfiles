@@ -165,6 +165,11 @@ gsettings set org.gnome.desktop.input-sources xkb-options "['ctrl:nocaps']"
 gnome-extensions enable nightthemeswitcher@romainvigier.fr 2>/dev/null || \
   echo "Note: run 'gnome-extensions enable nightthemeswitcher@romainvigier.fr' after next login"
 
+# ===== Claude Code =====
+if ! command -v claude &>/dev/null; then
+  curl -fsSL https://claude.ai/install.sh | bash
+fi
+
 # ===== agy (antigravity CLI) =====
 curl -fsSL https://antigravity.google/cli/install.sh | bash
 

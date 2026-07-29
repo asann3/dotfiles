@@ -14,9 +14,6 @@
     # terminal emulator
     ghostty-bin
 
-    # AI tools
-    claude-code
-
     # shell / terminal
     tmux
     tree

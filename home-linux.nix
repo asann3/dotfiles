@@ -14,9 +14,6 @@ in
   home.homeDirectory = "/home/${userConfig.user}";
 
   home.packages = with pkgs; [
-    # AI tools
-    claude-code
-
     # shell / terminal
     tmux
     tree

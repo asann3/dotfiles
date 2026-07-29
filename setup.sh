@@ -97,6 +97,11 @@ brew trust smudge/smudge
 brew install smudge/smudge/nightlight
 nightlight temp 85 && nightlight schedule 21:00 7:00
 
+# Claude Code — official native installer
+if ! command -v claude &>/dev/null; then
+  curl -fsSL https://claude.ai/install.sh | bash
+fi
+
 # agy (Google Antigravity CLI) — not available via nix/brew
 if ! command -v agy &>/dev/null; then
   curl -fsSL https://antigravity.google/cli/install.sh | bash
