@@ -18,7 +18,7 @@ sudo apt install -y xsettingsd xsct xdg-desktop-portal-gtk
 
 # ===== Japanese IME: IBus + Mozc =====
 # IBus is more stable than fcitx5 under GNOME + Wayland
-sudo apt install -y ibus ibus-mozc
+sudo apt install -y ibus ibus-mozc trayer
 im-config -n ibus
 
 if [ "$KEYBOARD" = "us" ]; then

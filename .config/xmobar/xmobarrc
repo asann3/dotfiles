@@ -2,7 +2,7 @@ Config
   { font        = "xft:Sans-10"
   , bgColor     = "#2e3440"
   , fgColor     = "#d8dee9"
-  , position    = Top
+  , position    = TopP 0 80
   , persistent  = True
   , commands    =
       [ Run XMonadLog

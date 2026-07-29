@@ -82,6 +82,7 @@ myStartupHook = do
   spawnOnce "xsettingsd"
   spawnOnce "/usr/libexec/xdg-desktop-portal-gtk"
   spawnOnce "theme-switch auto"
+  spawnOnce "trayer --edge top --align right --widthtype pixel --width 80 --height 22 --transparent true --alpha 0 --tint 0x2e3440"
   spawnOnce "ibus-daemon --xim --replace -d && sleep 2 && ibus engine mozc-us"
   spawnOnce "gnome-terminal"
 
