@@ -134,6 +134,10 @@ nix run github:nix-community/home-manager/master -- switch --flake "path:$DOTFIL
 
 export PATH="$HOME/.nix-profile/bin:$PATH"
 
+# ===== default editor =====
+sudo update-alternatives --install /usr/bin/editor editor "$HOME/.nix-profile/bin/vim" 60
+sudo update-alternatives --set editor "$HOME/.nix-profile/bin/vim"
+
 # ===== xmonad =====
 xmonad --recompile
 pgrep -x xmonad && xmonad --restart || true
