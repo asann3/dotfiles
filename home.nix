@@ -10,6 +10,10 @@
   home.username = "${userConfig.user}";
   home.homeDirectory = "/Users/${userConfig.user}";
 
+  home.sessionVariables = {
+    SHELL = "${pkgs.fish}/bin/fish";
+  };
+
   home.packages = with pkgs; [
     # terminal emulator
     ghostty-bin
