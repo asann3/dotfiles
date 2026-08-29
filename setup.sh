@@ -111,6 +111,7 @@ fi
 
 # Ollama — official native installer
 if ! command -v ollama &>/dev/null; then
-  curl -fsSL https://ollama.com/install.sh | sh
+  curl -fsSL https://ollama.com/install.sh | OLLAMA_NO_START=1 sh
 fi
+
 
