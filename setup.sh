@@ -108,3 +108,9 @@ if ! command -v agy &>/dev/null; then
   export PATH="$HOME/.local/bin:$PATH"
   agy install --skip-path
 fi
+
+# Ollama — official native installer
+if ! command -v ollama &>/dev/null; then
+  curl -fsSL https://ollama.com/install.sh | sh
+fi
+

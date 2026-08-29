@@ -86,7 +86,6 @@
 
     # infra
     ansible
-    ollama
 
     # misc
     bitwarden-desktop
