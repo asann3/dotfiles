@@ -88,7 +88,6 @@
     ansible
 
     # misc
-    bitwarden-desktop
     sl
   ];
 
