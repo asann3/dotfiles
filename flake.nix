@@ -77,6 +77,8 @@
             };
             # ControlCenter
             controlcenter.BatteryShowPercentage = true;
+            # Screenshot (directory is created by setup.sh)
+            screencapture.location = "~/Screenshots";
           };
 
           system.startup.chime = false;

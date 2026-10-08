@@ -69,6 +69,9 @@ cat > "$DOTFILES/user.nix" <<EOF
 EOF
 git -C "$DOTFILES" add --sparse user.nix
 
+# Screenshot save location (see screencapture.location in flake.nix)
+mkdir -p ~/Screenshots
+
 # nix-darwin manages sudo_local; remove the manually written file before activation
 sudo rm -f /etc/pam.d/sudo_local
 
