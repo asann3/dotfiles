@@ -1,0 +1,4 @@
+# ~/.config/zotero-pdf-sync/config にコピーして編集する
+REMOTE=webdav-remote          # rclone config で作ったリモート名
+REMOTE_DIR=Zotero_PDFs        # WebDAV 側のフォルダ
+LOCAL_DIR="$HOME/Zotero_PDFs" # 端末ごとのローカルフォルダ
