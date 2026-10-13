@@ -11,10 +11,14 @@ source "$CONF"
 
 RCLONE="$(command -v rclone || echo /opt/homebrew/bin/rclone)"
 mkdir -p "$LOCAL_DIR"
+"$RCLONE" mkdir "${REMOTE}:${REMOTE_DIR}"
 
 extra=()
-[[ "${1:-}" == "--resync" ]] && extra+=(--resync)
-[[ "${1:-}" == "--dry-run" ]] && extra+=(--dry-run)
+for a in "$@"; do
+  case "$a" in
+    --resync|--dry-run) extra+=("$a") ;;
+  esac
+done
 
 exec "$RCLONE" bisync "$LOCAL_DIR" "${REMOTE}:${REMOTE_DIR}" \
   --create-empty-src-dirs \
@@ -24,4 +28,4 @@ exec "$RCLONE" bisync "$LOCAL_DIR" "${REMOTE}:${REMOTE_DIR}" \
   --exclude "*.tmp" \
   --exclude ".~lock.*" \
   --resilient --recover \
-  -v "${extra[@]}"
+  -v ${extra[@]+"${extra[@]}"}
